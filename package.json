@@ -1,0 +1,18 @@
+{
+  "name": "macleod",
+  "version": "0.0.1",
+  "bin": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JamesKyburz/macleod.git"
+  },
+  "files": [
+    "src"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chalk": "2.3.2",
+    "execa": "0.10.0",
+    "glob": "7.1.2"
+  }
+}
