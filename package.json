@@ -6,6 +6,11 @@
     "type": "git",
     "url": "git://github.com/JamesKyburz/macleod.git"
   },
+  "keywords": [
+    "npm",
+    "publish",
+    "mono repo"
+  ],
   "files": [
     "src"
   ],
