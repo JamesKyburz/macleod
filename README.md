@@ -6,6 +6,8 @@ mono repo publishing made easy.
 [![downloads](https://img.shields.io/npm/dm/macleod.svg)](https://npmjs.org/package/macleod)
 [![Greenkeeper badge](https://badges.greenkeeper.io/JamesKyburz/macleod.svg)](https://greenkeeper.io/)
 
+<a href="https://asciinema.org/a/9Bv4p0Dp6ALDrevHaxSgjvzxD?autoplay=1&speed=3&size=small&preload=1"><img src="https://asciinema.org/a/9Bv4p0Dp6ALDrevHaxSgjvzxD.png" width="380"/></a>
+
 # assumptions
 
 * your mono repo has it's packages stored in ./packages
