@@ -119,4 +119,7 @@ const glob = require('glob')
 
     console.log(chalk.green.bold(`published ${gitTag}`))
   }
-})().catch(err => console.error(chalk.red(err.stack)))
+})().catch(err => {
+  console.error(chalk.red(err.stack))
+  process.exit(1)
+})
