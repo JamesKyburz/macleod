@@ -63,7 +63,7 @@ const glob = require('glob')
   for (const item of packages) walk(item)
 
   const run = command === 'exec' && args.shift()
-  const version = command === 'publish' && args.shift()
+  let version = command === 'publish' && args.shift()
 
   if (command === 'publish' && !version) {
     console.log(chalk.red('version patch or number expected'))
@@ -96,22 +96,22 @@ const glob = require('glob')
     }
     if (command === 'publish') {
       for (const name of item.dependencies) {
-        await exec('npm', ['install', `${name}@latest`], {
+        await exec('npm', ['install', `${name}@${version}`], {
           directory: item.directory
         })
       }
       await exec('npm', ['--no-git-tag-version', 'version', version], item)
+      if (version === 'patch') {
+        version = (await execa.shell(
+          `git diff ${item.directory}/package.json | grep '^+  "version"' | cut -d '"' -f4`
+        )).stdout
+      }
       await exec('npm', ['publish', item.directory])
     }
   }
 
   if (command === 'publish') {
-    const gitTag =
-      'v' +
-      (await execa.shell(
-        `git diff ${order[0]
-          .directory}/package.json | grep '^+  "version"' | cut -d '"' -f4`
-      )).stdout
+    const gitTag = 'v' + version
 
     await execa.shell(`git ls-files -m | grep 'package.*.json' | xargs git add`)
     await execa.shell(`git commit -m '${gitTag}'`)
