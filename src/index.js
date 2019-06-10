@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
+const minimist = require('minimist')
 const chalk = require('chalk')
 const execa = require('execa')
 const path = require('path')
 const glob = require('glob')
 ;(async () => {
-  const command = process.argv[2]
-  const args = process.argv.slice(3)
+  const argv = minimist(process.argv.slice(2))
+  const root = argv.root || 'packages'
+  const args = argv._
+  const command = args.shift()
 
   if (!['exec', 'publish'].includes(command)) {
     console.log(
@@ -27,7 +30,7 @@ const glob = require('glob')
   }
 
   const packages = glob
-    .sync(path.join(process.cwd(), 'packages', '*', 'package.json'))
+    .sync(path.join(process.cwd(), root, '*', 'package.json'))
     .map(x => ({
       name: require(x).name,
       dependencies: Object.keys(require(x).dependencies || {}).concat(
@@ -103,7 +106,9 @@ const glob = require('glob')
       await exec('npm', ['--no-git-tag-version', 'version', version], item)
       if (version === 'patch') {
         version = (await execa.shell(
-          `git diff ${item.directory}/package.json | grep '^+  "version"' | cut -d '"' -f4`
+          `git diff ${
+            item.directory
+          }/package.json | grep '^+  "version"' | cut -d '"' -f4`
         )).stdout
       }
       await exec('npm', ['publish', item.directory])
