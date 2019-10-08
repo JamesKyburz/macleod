@@ -1,6 +1,6 @@
 {
   "name": "macleod",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "bin": "src/index.js",
   "repository": {
     "type": "git",
