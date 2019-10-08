@@ -54,7 +54,7 @@ const glob = require('glob')
   const walk = item => {
     if (order.find(x => x.name === item.name)) return
     if (order.length === packageNames.length) return
-    let pending = dependencyCount(item)
+    const pending = dependencyCount(item)
     if (pending) {
       for (const child of item.dependencies) {
         walk(packages.find(x => x.name === child))
@@ -118,7 +118,7 @@ const glob = require('glob')
   if (command === 'publish') {
     const gitTag = 'v' + version
 
-    await execa.shell(`git ls-files -m | grep 'package.*.json' | xargs git add`)
+    await execa.shell("git ls-files -m | grep 'package.*.json' | xargs git add")
     await execa.shell(`git commit -m '${gitTag}'`)
     await execa.shell(`git tag ${gitTag}`)
 
