@@ -16,9 +16,9 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "chalk": "2.3.2",
-    "execa": "0.10.0",
-    "glob": "7.1.2",
+    "chalk": "2.4.2",
+    "execa": "2.0.5",
+    "glob": "7.1.4",
     "minimist": "1.2.0"
   }
 }
