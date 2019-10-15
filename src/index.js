@@ -79,8 +79,8 @@ const glob = require('glob')
   const exec = async (run, args, { name, directory } = {}) => {
     const suffix = name
       ? `in directory ${chalk.magenta.bold(
-        path.basename(directory)
-      )} for package ${chalk.magenta.bold(name)}`
+          path.basename(directory)
+        )} for package ${chalk.magenta.bold(name)}`
       : ''
     console.log(
       chalk.green(
@@ -109,7 +109,7 @@ const glob = require('glob')
         version = (await shell(
           `git diff ${
             item.directory
-          }/package.json | grep '^+  "version"' | cut -d '"' -f4`
+          }/package.json | grep -E '^+\\s*"version"' | cut -d '"' -f4`
         )).stdout
       }
       await exec('npm', ['publish', item.directory])
