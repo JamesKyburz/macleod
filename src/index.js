@@ -10,6 +10,7 @@ const glob = require('glob')
   const root = argv.root || 'packages'
   const args = argv._
   const command = args.shift()
+  const shell = command => execa.command(command, { shell: '/bin/sh' })
 
   if (!['exec', 'publish'].includes(command)) {
     console.log(
@@ -20,7 +21,7 @@ const glob = require('glob')
 
   try {
     if (command === 'publish') {
-      await execa.shell('git diff-index --quiet HEAD --')
+      await shell('git diff-index --quiet HEAD --')
     }
   } catch (e) {
     console.log(
@@ -105,7 +106,7 @@ const glob = require('glob')
       }
       await exec('npm', ['--no-git-tag-version', 'version', version], item)
       if (version === 'patch') {
-        version = (await execa.shell(
+        version = (await shell(
           `git diff ${
             item.directory
           }/package.json | grep '^+  "version"' | cut -d '"' -f4`
@@ -118,9 +119,9 @@ const glob = require('glob')
   if (command === 'publish') {
     const gitTag = 'v' + version
 
-    await execa.shell("git ls-files -m | grep 'package.*.json' | xargs git add")
-    await execa.shell(`git commit -m '${gitTag}'`)
-    await execa.shell(`git tag ${gitTag}`)
+    await shell("git ls-files -m | grep 'package.*.json' | xargs git add")
+    await shell(`git commit -m '${gitTag}'`)
+    await shell(`git tag ${gitTag}`)
 
     console.log(chalk.green.bold(`published ${gitTag}`))
   }
