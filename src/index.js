@@ -89,8 +89,9 @@ const glob = require('glob')
         )} ${suffix}`
       )
     )
-    await execa(run, [...args, ...(directory ? ['--prefix', directory] : [])], {
-      stdio: 'inherit'
+    await execa(run, [...args], {
+      stdio: 'inherit',
+      ...(directory && { cwd: directory })
     })
   }
 
