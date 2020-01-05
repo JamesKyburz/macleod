@@ -109,7 +109,7 @@ const glob = require('glob')
         version = (await shell(
           `git diff ${
             item.directory
-          }/package.json | grep -E '^+\\s*"version"' | cut -d '"' -f4`
+          }/package.json | grep -E '^\\+\\s*"version"' | cut -d '"' -f4`
         )).stdout
       }
       await exec('npm', ['publish', item.directory])
